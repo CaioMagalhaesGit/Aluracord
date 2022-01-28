@@ -4,9 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 
-
-function Titulo(props) {
-    console.log(props);
+function Titulo(props) {    
     const Tag = props.tag || 'h1';
     return (
         <>
@@ -24,27 +22,17 @@ function Titulo(props) {
 
 
 
-// function HomePage() {
-//     return (
-//         <div>
-//             <GlobalStyle />
-//             <Titulo tag="h2">Boas vindas de volta!</Titulo>
-//             <h2>Discord - Alura Matrix</h2>
-
-//         </div>
-//     )
-
+// function onChange(ev){
+//     const {username} = ev.target;   
 // }
 
-//export default HomePage
 
-export default function PaginaInicial() {
-    //const username = 'CaioMagalhaesGit';
-    const [username, setUsername ] = React.useState('CaioMagalhaesGit');
-    const roteamento = useRouter();
 
+export default function PaginaInicial() {   
+    const [username, setUsername] = React.useState('');
+    const roteamento = useRouter();    
     return (
-        <>            
+        <>
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -71,9 +59,8 @@ export default function PaginaInicial() {
                     {/* Formulário */}
                     <Box
                         as="form"
-                        onSubmit={function(event){
+                        onSubmit={function (event) {
                             event.preventDefault();
-                            console.log('Alguem submeteu');
                             roteamento.push('/chat');
 
                             //window.location.href='/chat';
@@ -87,23 +74,17 @@ export default function PaginaInicial() {
                         <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
                             {appConfig.name}
                         </Text>
-
-                        {/* <input
-                         type="text"
-                         value={username}
-                        onChange={function (event){
-                            console.log("usuario digitou", event.target.value)
-                            const valor = event.target.value;
-                            setUsername(valor);
-                        }}
-                        /> */}
                         <TextField
-                        value={username}
-                        onChange={function (event){
-                            const valor = event.target.value;
-                            setUsername(valor);
-                        }}
+                            value={username}
+                            onChange={function (event) {
+                                console.log('usuario digitou', event.target.value);
+                                const valor = event.target.value;
+                                setUsername(valor);
+                                
+                                
+                            }}
                             fullWidth
+                            placeholder='Digite seu nome de usuário'
                             textFieldColors={{
                                 neutral: {
                                     textColor: appConfig.theme.colors.neutrals[200],
@@ -112,8 +93,9 @@ export default function PaginaInicial() {
                                     backgroundColor: appConfig.theme.colors.neutrals[800],
                                 },
                             }}
-                        /> 
+                        />
                         <Button
+                            disabled = {!username || username.length <= 2}
                             type='submit'
                             label='Entrar'
                             fullWidth
@@ -144,12 +126,13 @@ export default function PaginaInicial() {
                             minHeight: '240px',
                         }}
                     >
-                        <Image
+                        <Image //onChange={onChange}
                             styleSheet={{
                                 borderRadius: '50%',
                                 marginBottom: '16px',
                             }}
                             src={`https://github.com/${username}.png`}
+                           
                         />
                         <Text
                             variant="body4"

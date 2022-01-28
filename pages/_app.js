@@ -29,11 +29,11 @@ function GlobalStyle() {
 }
 
 
-export default function MyApp({ Component, pageProps }) {
+export default function CustomApp({ Component, pageProps }) {
 
     return (
-        <>
-        <GlobalStyle/>
+        <>        
+        <GlobalStyle/>        
         <Component {...pageProps} />
         </>
     
