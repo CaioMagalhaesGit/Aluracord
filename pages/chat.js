@@ -2,9 +2,11 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
 
+
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
     const [ListaDeMensagens, setListaDeMensagens] = React.useState([]);
+    
 
     // Sua lógica vai aqui
 
@@ -17,8 +19,9 @@ export default function ChatPage() {
             texto: novaMensagem,
         };
         setListaDeMensagens([
-            ...ListaDeMensagens,
             mensagem,
+            ...ListaDeMensagens,
+
         ]);
         setMensagem('');
     }
@@ -60,7 +63,7 @@ export default function ChatPage() {
                         padding: '16px',
                     }}
                 >
-                    <MessageList mensagens={[ListaDeMensagens]} />
+                    <MessageList mensagens={ListaDeMensagens} />
                     {/* {ListaDeMensagens.map((mensagemAtual) => {
                         return (
                             <li key={mensagemAtual.id}>
@@ -102,7 +105,28 @@ export default function ChatPage() {
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                            }}
+                                
+                       
+                                
+                            }}   
+                                                    
+                            
+                        />
+                        <Button 
+                        onClick={(event) => {                           
+                                
+                            handleNovaMensagem(mensagem); 
+                        }}
+                        label='Ok'
+                        styleSheet={{
+                           marginBottom: '8px',
+                         }}
+                         buttonColors={{
+                            contrastColor: appConfig.theme.colors.neutrals["000"],
+                            mainColor: appConfig.theme.colors.primary[500],
+                            mainColorLight: appConfig.theme.colors.primary[400],
+                            mainColorStrong: appConfig.theme.colors.primary[600],
+                        }}
                         />
                     </Box>
                 </Box>
@@ -135,7 +159,7 @@ function MessageList(props) {
         <Box
             tag="ul"
             styleSheet={{
-                overflow: 'scroll',
+                overflow: 'auto',
                 display: 'flex',
                 flexDirection: 'column-reverse',
                 flex: 1,
@@ -160,7 +184,10 @@ function MessageList(props) {
                         <Box
                             styleSheet={{
                                 marginBottom: '8px',
+                                display: "flex",
+                                alignItems: "center"
                             }}
+                            
                         >
                             <Image
                                 styleSheet={{
@@ -170,7 +197,7 @@ function MessageList(props) {
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
-                                src={`https://github.com/vanessametonini.png`}
+                                src={`https://github.com/caiomagalhaesgit.png`}
                             />
                             <Text tag="strong">
                                 {mensagem.de}
@@ -183,7 +210,8 @@ function MessageList(props) {
                                 }}
                                 tag="span"
                             >
-                                {(new Date().toLocaleDateString())}
+                                {(new Date().toLocaleDateString())}                                
+                                
                             </Text>
                         </Box>
                         {mensagem.texto}
