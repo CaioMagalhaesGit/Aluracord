@@ -3,10 +3,11 @@ import React from 'react';
 import appConfig from '../config.json';
 
 
+
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
     const [ListaDeMensagens, setListaDeMensagens] = React.useState([]);
-    
+
 
     // Sua lógica vai aqui
 
@@ -25,6 +26,14 @@ export default function ChatPage() {
         ]);
         setMensagem('');
     }
+
+    // function deletarmensagem(e){
+    //     this.setState({ListaDeMensagens: this.state.ListaDeMensagens.filter(funtion(mensagem){
+    //         return mensagem !== e.target.value
+    //     })});
+    //     }
+
+    // }
 
     return (
         <Box
@@ -97,6 +106,7 @@ export default function ChatPage() {
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
                             styleSheet={{
+
                                 width: '100%',
                                 border: '0',
                                 resize: 'none',
@@ -105,28 +115,28 @@ export default function ChatPage() {
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                
-                       
-                                
-                            }}   
-                                                    
-                            
+
+
+
+                            }}
+
+
                         />
-                        <Button 
-                        onClick={(event) => {                           
-                                
-                            handleNovaMensagem(mensagem); 
-                        }}
-                        label='Ok'
-                        styleSheet={{
-                           marginBottom: '8px',
-                         }}
-                         buttonColors={{
-                            contrastColor: appConfig.theme.colors.neutrals["000"],
-                            mainColor: appConfig.theme.colors.primary[500],
-                            mainColorLight: appConfig.theme.colors.primary[400],
-                            mainColorStrong: appConfig.theme.colors.primary[600],
-                        }}
+                        <Button
+                            onClick={(event) => {
+
+                                handleNovaMensagem(mensagem);
+                            }}
+                            label='Ok'
+                            styleSheet={{
+                                marginBottom: '8px',
+                            }}
+                            buttonColors={{
+                                contrastColor: appConfig.theme.colors.neutrals["000"],
+                                mainColor: appConfig.theme.colors.primary[500],
+                                mainColorLight: appConfig.theme.colors.primary[400],
+                                mainColorStrong: appConfig.theme.colors.primary[600],
+                            }}
                         />
                     </Box>
                 </Box>
@@ -157,6 +167,7 @@ function MessageList(props) {
     console.log(props);
     return (
         <Box
+
             tag="ul"
             styleSheet={{
                 overflow: 'auto',
@@ -165,8 +176,11 @@ function MessageList(props) {
                 flex: 1,
                 color: appConfig.theme.colors.neutrals["000"],
                 marginBottom: '16px',
+
             }}
+
         >
+
             {props.mensagens.map((mensagem) => {
                 return (
                     <Text
@@ -187,7 +201,7 @@ function MessageList(props) {
                                 display: "flex",
                                 alignItems: "center"
                             }}
-                            
+
                         >
                             <Image
                                 styleSheet={{
@@ -207,13 +221,30 @@ function MessageList(props) {
                                     fontSize: '10px',
                                     marginLeft: '8px',
                                     color: appConfig.theme.colors.neutrals[300],
+                                    
                                 }}
                                 tag="span"
                             >
-                                {(new Date().toLocaleDateString())}                                
-                                
+                                {(new Date().toLocaleDateString())}
+
                             </Text>
+                            <Button                
+                                
+                                
+                                onClick={() => {                                                                        
+                                   // deletarmensagem(mensagem);
+                                }}
+                                variant='tertiary'
+                                colorVariant='neutral' 
+                                label='X'                            
+                                title='Deletar mensagem'
+                                
+
+                            />
+
                         </Box>
+                       
+
                         {mensagem.texto}
                     </Text>
                 );
