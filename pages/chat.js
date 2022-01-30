@@ -2,16 +2,31 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/router';
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker';
+
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzQ5OTIzMiwiZXhwIjoxOTU5MDc1MjMyfQ.qu7POKhBnWuW5s0kfwURf47AELp9vEcnlosZ8IAgB8c'
 const SUPABASE_URL = 'https://povvjlcegolfgkwilrxz.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// function escutaMensagensemtemporeal(adicionamensagem) {
+//     return supabaseClient
+//         .from('mensagens(aluracord)')
+//         .on('INSERT', (respostalive) => {
+//             adicionamensagem(respostalive);
+//         })
+//         .subscribe();
+// }
 
 
 export default function ChatPage() {
+
+    const roteamento = useRouter();
+    const usuariologado = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
     const [ListaDeMensagens, setListaDeMensagens] = React.useState([]);
+
 
     React.useEffect(() => {
         supabaseClient
@@ -23,13 +38,15 @@ export default function ChatPage() {
                 setListaDeMensagens(data);
             });
 
+        //escutaMensagensemtemporeal();
+
     }, []);
 
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
             // id: ListaDeMensagens.length + 1,
-            de: 'CaioMagalhaesGit',
+            de: usuariologado,
             texto: novaMensagem,
         };
 
@@ -95,7 +112,7 @@ export default function ChatPage() {
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
-                     
+
                     }}
                 >
                     <MessageList mensagens={ListaDeMensagens} />
@@ -130,6 +147,7 @@ export default function ChatPage() {
 
                             }}
                             placeholder="Insira sua mensagem aqui..."
+
                             type="textarea"
                             styleSheet={{
 
@@ -148,6 +166,16 @@ export default function ChatPage() {
 
 
                         />
+
+                        <ButtonSendSticker
+
+                            onStickerClick={(sticker) => {
+                                console.log("salva esse sticker");
+                                handleNovaMensagem(':sticker:' + sticker);
+                            }}
+
+                        />
+
                         <Button
                             onClick={(event) => {
 
@@ -254,7 +282,7 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
 
                             </Text>
-                            <Button
+                            {/* <Button
 
 
                                 onClick={() => {
@@ -266,12 +294,16 @@ function MessageList(props) {
                                 title='Deletar mensagem'
 
 
-                            />
+                            /> */}
 
                         </Box>
-
-
-                        {mensagem.texto}
+                        {/* Condicional: {mensagem.texto.startsWith(':sticker:').toString()} */}
+                        {mensagem.texto.startsWith(':sticker:') ? (
+                            <Image src={mensagem.texto.replace(':sticker:', '')} />
+                        ) : (
+                            mensagem.texto
+                        )}
+                        {/* {mensagem.texto} */}
                     </Text>
                 );
             })}
