@@ -8,32 +8,44 @@ const SUPABASE_URL = 'https://povvjlcegolfgkwilrxz.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
-const dadosdossupabase = supabaseClient.from('mensagens(aluracord)')
-.select('*');
-
-console.log(dadosdossupabase);
-
 
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
     const [ListaDeMensagens, setListaDeMensagens] = React.useState([]);
-    
 
-    // Sua lógica vai aqui
+    React.useEffect(() => {
+        supabaseClient
+            .from('mensagens(aluracord)')
+            .select('*')
+            .then(({ data }) => {
+                console.log('Dados da consulta:', data);
+                setListaDeMensagens(data);
+            });
 
-    // ./Sua lógica vai aqui
+    }, []);
+
 
     function handleNovaMensagem(novaMensagem) {
         const mensagem = {
-            id: ListaDeMensagens.length + 1,
+            // id: ListaDeMensagens.length + 1,
             de: 'CaioMagalhaesGit',
             texto: novaMensagem,
         };
-        setListaDeMensagens([
-            mensagem,
-            ...ListaDeMensagens,
 
-        ]);
+        supabaseClient
+            .from('mensagens(aluracord)')
+            .insert([
+                mensagem
+            ])
+            .then(({ data }) => {
+                //console.log('criando mensagem:', oquetavindocomoresposta);
+                setListaDeMensagens([
+                    data[0],
+                    ...ListaDeMensagens,
+
+                ]);
+            });
+
         setMensagem('');
     }
 
@@ -221,7 +233,7 @@ function MessageList(props) {
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
-                                src={`https://github.com/caiomagalhaesgit.png`}
+                                src={`https://github.com/${mensagem.de}.png`}
                             />
                             <Text tag="strong">
                                 {mensagem.de}
@@ -231,29 +243,29 @@ function MessageList(props) {
                                     fontSize: '10px',
                                     marginLeft: '8px',
                                     color: appConfig.theme.colors.neutrals[300],
-                                    
+
                                 }}
                                 tag="span"
                             >
                                 {(new Date().toLocaleDateString())}
 
                             </Text>
-                            <Button                
-                                
-                                
-                                onClick={() => {                                                                        
-                                   // deletarmensagem(mensagem);
+                            <Button
+
+
+                                onClick={() => {
+                                    // deletarmensagem(mensagem);
                                 }}
                                 variant='tertiary'
-                                colorVariant='neutral' 
-                                label='X'                            
+                                colorVariant='neutral'
+                                label='X'
                                 title='Deletar mensagem'
-                                
+
 
                             />
 
                         </Box>
-                       
+
 
                         {mensagem.texto}
                     </Text>
