@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 
-function Titulo(props) {    
+function Titulo(props) {
     const Tag = props.tag || 'h1';
     return (
         <>
@@ -22,22 +22,26 @@ function Titulo(props) {
 
 
 
+
 // function onChange(ev){
 //     const {username} = ev.target;   
 // }
 
 
 
-export default function PaginaInicial() {   
+export default function PaginaInicial() {
     const [username, setUsername] = React.useState('');
-    const roteamento = useRouter();    
+    const roteamento = useRouter();
     return (
+
         <>
+
             <Box
+
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary[500],
-                    backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+                    backgroundColor: appConfig.theme.colors.primary[100],
+                    backgroundImage: 'url(https://p4.wallpaperbetter.com/wallpaper/380/523/681/design-neon-abstract-light-design-hd-wallpaper-preview.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
             >
@@ -54,8 +58,11 @@ export default function PaginaInicial() {
                         borderRadius: '5px', padding: '32px', margin: '16px',
                         boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                         backgroundColor: appConfig.theme.colors.neutrals[700],
+                        opacity: 0.95,
                     }}
+
                 >
+
                     {/* Formulário */}
                     <Box
                         as="form"
@@ -69,19 +76,21 @@ export default function PaginaInicial() {
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
                         }}
+
                     >
-                        <Titulo tag="h2">Boas vindas de volta!</Titulo>
+
+                        <Titulo tag="h2">Bem Vindo!</Titulo>
                         <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
-                            {appConfig.name}
+                            <>Entre com sua conta do GitHub</>
                         </Text>
                         <TextField
                             value={username}
                             onChange={function (event) {
-                                console.log('usuario digitou', event.target.value);
+                                //console.log('usuario digitou', event.target.value);
                                 const valor = event.target.value;
                                 setUsername(valor);
-                                
-                                
+
+
                             }}
                             fullWidth
                             placeholder='Digite seu nome de usuário'
@@ -95,7 +104,7 @@ export default function PaginaInicial() {
                             }}
                         />
                         <Button
-                            disabled = {!username || username.length <= 2}
+                            disabled={!username || username.length <= 2}
                             type='submit'
                             label='Entrar'
                             fullWidth
@@ -105,6 +114,7 @@ export default function PaginaInicial() {
                                 mainColorLight: appConfig.theme.colors.primary[400],
                                 mainColorStrong: appConfig.theme.colors.primary[600],
                             }}
+
                         />
                     </Box>
                     {/* Formulário */}
@@ -112,7 +122,9 @@ export default function PaginaInicial() {
 
                     {/* Photo Area */}
                     <Box
+
                         styleSheet={{
+
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -126,13 +138,19 @@ export default function PaginaInicial() {
                             minHeight: '240px',
                         }}
                     >
+                        
                         <Image //onChange={onChange}
                             styleSheet={{
                                 borderRadius: '50%',
-                                marginBottom: '16px',
+                                marginBottom: '10px',
                             }}
-                            src={`https://github.com/${username}.png`}
-                           
+
+                            src={
+                                username.length > 1
+                                ?`https://github.com/${username}.png`
+                                :`https://rockcontent.com/br/wp-content/uploads/sites/2/2020/03/github.jpg`
+                            }
+
                         />
                         <Text
                             variant="body4"

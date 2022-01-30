@@ -17,6 +17,7 @@ export default function ChatPage() {
         supabaseClient
             .from('mensagens(aluracord)')
             .select('*')
+            .order('id', { ascending: false })
             .then(({ data }) => {
                 console.log('Dados da consulta:', data);
                 setListaDeMensagens(data);
@@ -61,10 +62,11 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                backgroundColor: appConfig.theme.colors.primary[500],
-                backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)`,
+                //backgroundColor: appConfig.theme.colors.primary[500],
+                backgroundImage: `url(https://p4.wallpaperbetter.com/wallpaper/380/523/681/design-neon-abstract-light-design-hd-wallpaper-preview.jpg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
-                color: appConfig.theme.colors.neutrals['000']
+                color: appConfig.theme.colors.neutrals['000'],
+                maxWidth: '100%',
             }}
         >
             <Box
@@ -79,6 +81,7 @@ export default function ChatPage() {
                     maxWidth: '95%',
                     maxHeight: '95vh',
                     padding: '32px',
+                    opacity: 0.95,
                 }}
             >
                 <Header />
@@ -92,6 +95,7 @@ export default function ChatPage() {
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
+                     
                     }}
                 >
                     <MessageList mensagens={ListaDeMensagens} />
@@ -149,7 +153,7 @@ export default function ChatPage() {
 
                                 handleNovaMensagem(mensagem);
                             }}
-                            label='Ok'
+                            label='Enviar'
                             styleSheet={{
                                 marginBottom: '8px',
                             }}
