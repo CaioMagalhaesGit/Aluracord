@@ -1,4 +1,4 @@
-import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
@@ -10,14 +10,16 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5v
 const SUPABASE_URL = 'https://povvjlcegolfgkwilrxz.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// function escutaMensagensemtemporeal(adicionamensagem) {
-//     return supabaseClient
-//         .from('mensagens(aluracord)')
-//         .on('INSERT', (respostalive) => {
-//             adicionamensagem(respostalive);
-//         })
-//         .subscribe();
-// }
+
+
+function escutaMensagensemtemporeal(adicionamensagem) {
+    return supabaseClient
+        .from('mensagens(aluracord)')
+        .on('INSERT', (respostalive) => {
+            adicionamensagem(respostalive.new);
+        })
+        .subscribe();
+}
 
 
 export default function ChatPage() {
@@ -34,13 +36,28 @@ export default function ChatPage() {
             .select('*')
             .order('id', { ascending: false })
             .then(({ data }) => {
-                console.log('Dados da consulta:', data);
+                //console.log('Dados da consulta:', data);
                 setListaDeMensagens(data);
             });
 
-        //escutaMensagensemtemporeal();
+        escutaMensagensemtemporeal((novaMensagem) => {
+            //console.log('nova msg', novaMensagem);
+            setListaDeMensagens((valoratuallista) => {
+                return [
+                    novaMensagem,
+                    ...valoratuallista,
+                ]
+            });
+        });
 
     }, []);
+
+    
+    function deletarmensagem() {
+        setListaDeMensagens(ListaDeMensagens.filter(function (mensagem) {
+            return !mensagem.delete
+        }));
+    }
 
 
     function handleNovaMensagem(novaMensagem) {
@@ -56,24 +73,11 @@ export default function ChatPage() {
                 mensagem
             ])
             .then(({ data }) => {
-                //console.log('criando mensagem:', oquetavindocomoresposta);
-                setListaDeMensagens([
-                    data[0],
-                    ...ListaDeMensagens,
-
-                ]);
+                //console.log('criando mensagem:', data);
             });
 
         setMensagem('');
     }
-
-    // function deletarmensagem(e){
-    //     this.setState({ListaDeMensagens: this.state.ListaDeMensagens.filter(funtion(mensagem){
-    //         return mensagem !== e.target.value
-    //     })});
-    //     }
-
-    // }
 
     return (
         <Box
@@ -115,7 +119,7 @@ export default function ChatPage() {
 
                     }}
                 >
-                    <MessageList mensagens={ListaDeMensagens} />
+                    <MessageList mensagens={ListaDeMensagens} deletarmensagem={deletarmensagem}/>
                     {/* {ListaDeMensagens.map((mensagemAtual) => {
                         return (
                             <li key={mensagemAtual.id}>
@@ -170,7 +174,7 @@ export default function ChatPage() {
                         <ButtonSendSticker
 
                             onStickerClick={(sticker) => {
-                                console.log("salva esse sticker");
+                                //console.log("salva esse sticker");
                                 handleNovaMensagem(':sticker:' + sticker);
                             }}
 
@@ -199,6 +203,8 @@ export default function ChatPage() {
     )
 }
 
+
+
 function Header() {
     return (
         <>
@@ -218,7 +224,9 @@ function Header() {
 }
 
 function MessageList(props) {
-    console.log(props);
+
+
+
     return (
         <Box
 
@@ -282,19 +290,24 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
 
                             </Text>
-                            {/* <Button
-
-
-                                onClick={() => {
-                                    // deletarmensagem(mensagem);
+                            <Icon
+                                name={"FaTrash"}
+                                styleSheet={{
+                                    marginLeft: "auto",
+                                    marginRight: ".7rem",
+                                    transition: ".4s ease all",
+                                    cursor: "pointer",
+                                    hover: {
+                                        color: appConfig.theme.colors.neutrals['000']
+                                    }
                                 }}
-                                variant='tertiary'
-                                colorVariant='neutral'
-                                label='X'
-                                title='Deletar mensagem'
-
-
-                            /> */}
+                                onClick={() => {
+                                    mensagem.delete = true;
+                                    props.deletarmensagem();
+                                }}   
+                                title = 'Deletar mensagem'                         
+                               
+                            />
 
                         </Box>
                         {/* Condicional: {mensagem.texto.startsWith(':sticker:').toString()} */}
