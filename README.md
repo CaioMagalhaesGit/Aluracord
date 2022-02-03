@@ -24,7 +24,7 @@ tem acesso a pagina de chat, onde os usuarios podem trocar mensagens, emojis, fi
 
 ## 🤝 Colaboradores
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
+Feito na Imersao react com a equipe do Alura:
 
 <table>
   <tr>
@@ -45,10 +45,10 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/CaioMagalhaesGit">
-        <img src="https://user-images.githubusercontent.com/61692382/149660685-fe5d5bd1-a592-46f5-916c-2271aaa5f205.jpg" width="100px;"/><br>
+      <a href="https://github.com/omariosouto">
+        <img src="https://avatars.githubusercontent.com/u/13791385?v=4" width="100px;"/><br>
         <sub>
-          <b>Caio Magalhaes</b>
+          <b>Mario souto</b>
         </sub>
       </a>
     </td>
