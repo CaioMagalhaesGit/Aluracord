@@ -38,9 +38,17 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
     </td>
     <td align="center">
       <a href="https://github.com/peas">
-        <img src="https://user-images.githubusercontent.com/61692382/149661127-381a8936-90c1-43e2-918d-a353f37490d7.png" width="100px;"/><br>
+        <img src="https://avatars.githubusercontent.com/u/71636?v=4" width="100px;"/><br>
         <sub>
           <b>Paulo</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/CaioMagalhaesGit">
+        <img src="https://user-images.githubusercontent.com/61692382/149660685-fe5d5bd1-a592-46f5-916c-2271aaa5f205.jpg" width="100px;"/><br>
+        <sub>
+          <b>Caio Magalhaes</b>
         </sub>
       </a>
     </td>
