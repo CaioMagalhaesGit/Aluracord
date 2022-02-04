@@ -13,6 +13,8 @@ tem acesso a pagina de chat, onde os usuarios podem trocar mensagens, emojis, fi
 
 
 ![imagem_2022-02-03_152617](https://user-images.githubusercontent.com/61692382/152405450-fe8d5f07-b92e-444d-9cb4-1dcd16def3a4.png)
+  
+  Link do site: https://discordzin.vercel.app
 
 ## 📫 Programas usados:
 
